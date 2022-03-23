@@ -17,6 +17,6 @@ app.get("/search", async (req, res) => {
   res.send(response);
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Foxbel api listening on port ${port}`);
 });
