@@ -23,6 +23,14 @@ app.get("/search-album", async (req, res) => {
   res.send(response);
 });
 
+app.get("/album/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await fetch(`${configService.apiUrl}/album/${id}`).then(
+    (response) => response.json()
+  );
+  res.send(response);
+});
+
 app.listen(process.env.PORT || port, () => {
   console.log(`Foxbel api listening on port ${port}`);
 });
