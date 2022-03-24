@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HeaderSidebar from "./components/HeaderSidebar.vue";
+import HeaderSidebar from "@/components/HeaderSidebar.vue";
 import FooterPlayer from "@/components/FooterPlayer.vue";
-import MainContainer from "./components/MainContainer.vue";
+import MainContainer from "@/components/MainContainer.vue";
 
 import { ref } from "vue";
 
