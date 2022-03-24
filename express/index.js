@@ -15,11 +15,11 @@ const configService = {
   apiUrl: "https://api.deezer.com",
 };
 
-app.get("/search", async (req, res) => {
+app.get("/search-album", async (req, res) => {
   const { q } = req.query;
-  const response = await fetch(`${configService.apiUrl}/search?q=${q}`).then(
-    (response) => response.json()
-  );
+  const response = await fetch(
+    `${configService.apiUrl}/search/album?q=${q}`
+  ).then((response) => response.json());
   res.send(response);
 });
 
