@@ -1,26 +1,56 @@
-<script setup lang="ts"></script>
+<script lang="ts">
+import type { SearchAlbum } from "@/models/search-album.model";
+import DeezerService from "@/services/deezer.service";
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  emits: ["toPlay"],
+  data() {
+    return {
+      search: "",
+      albums: {} as SearchAlbum,
+    };
+  },
+  mounted() {
+    this.onSearch();
+  },
+  methods: {
+    async onSearch() {
+      this.albums = await DeezerService.searchAlbum(
+        this.search ? encodeURI(this.search) : "pelo d'ambrosio"
+      );
+    },
+    onPlay(_albumId: number) {
+      this.$emit("toPlay", _albumId);
+    },
+  },
+});
+</script>
 
 <template>
   <main class="grow justify-center max-h-[calc(100vh-100px)] overflow-auto">
     <div class="flex flex-col gap-10 px-10 py-[1.875rem]">
       <!-- header -->
       <div class="flex items-center">
-        <div class="flex w-[32.75rem]">
+        <form class="flex w-[32.75rem]" onsubmit="return false">
           <input
+            v-model="search"
             class="w-full leading-[1.375rem] text-lg px-4 py-1.5 border border-[#828282] border-r-0 rounded-l-[100px] placeholder:text-[#BDBDBD]"
             type="text"
             name="buscar"
             placeholder="Buscar"
           />
           <button
+            type="submit"
             class="border border-[#808080] border-l-0 px-4 rounded-r-full text-[#BDBDBD]"
+            @click="onSearch"
           >
             <i class="fa-solid fa-magnifying-glass fa-lg"></i>
           </button>
-        </div>
+        </form>
         <button class="hover:underline space-x-3 ml-auto">
           <span><i class="fa-solid fa-user fa-sm text-[#E86060]"></i></span>
-          <span class="ml-auto">Francisco M.</span>
+          <span class="ml-auto">Jhorman Rus</span>
         </button>
       </div>
       <!-- portada -->
@@ -31,11 +61,11 @@
             src="/img/album.png"
             alt="album"
           />
-          <span
-            class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]"
+          <button
+            class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] hover:scale-110 transition"
           >
             <i class="fa-solid fa-play fa-5x"></i>
-          </span>
+          </button>
         </div>
         <div class="relative grow">
           <img
@@ -76,28 +106,32 @@
           style="grid-template-columns: repeat(auto-fit, 160px)"
         >
           <div
-            v-for="i of [, , , , , , , , ,]"
-            :key="i"
+            v-for="album of albums.data"
+            :key="album.id"
             class="max-w-[160px] space-y-2"
           >
             <div class="relative w-[160px] h-[160px] text-white">
               <img
                 class="absolute w-full h-full"
-                src="/img/album.png"
+                :src="album.cover_medium"
                 alt="adele"
               />
-              <span
-                class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]"
+              <button
+                type="button"
+                class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] hover:scale-125 transition"
+                @click="onPlay(album.id)"
               >
                 <i class="fa-solid fa-play fa-2xl"></i>
-              </span>
-              <span class="absolute right-0 px-2 py-1">
+              </button>
+              <button type="button" class="absolute right-0 px-2 py-1">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
-              </span>
+              </button>
             </div>
             <div>
-              <h1 class="text-sm text-[#555555] font-bold">21</h1>
-              <h2 class="text-xs text-[#828282]">Adele</h2>
+              <h1 class="text-sm text-[#555555] font-bold">
+                {{ album.title }}
+              </h1>
+              <h2 class="text-xs text-[#828282]">{{ album.artist.name }}</h2>
             </div>
           </div>
         </div>

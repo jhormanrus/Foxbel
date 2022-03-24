@@ -1,34 +1,38 @@
 <script lang="ts">
+import DeezerService from "@/services/deezer.service";
 import { defineComponent } from "vue";
+import type { Album } from "@/models/album.model";
+
 export default defineComponent({
+  props: {
+    albumId: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
-      musicList: [
-        {
-          img: "img/album.png",
-          name: "example",
-          artist: "example",
-          music: "eleven.mp3",
-        },
-        {
-          img: "img/album.png",
-          name: "example",
-          artist: "example",
-          music: "takeit.mp3",
-        },
-      ],
+      fullAlbum: null as unknown as Album,
       trackIndex: 0,
       isPlaying: false,
       muted: false,
       currTrack: document.createElement("audio"),
     };
   },
-  mounted() {
+  watch: {
+    async albumId(_albumId) {
+      this.fullAlbum = await DeezerService.getAlbum(_albumId);
+      this.loadTrack(this.trackIndex);
+      this.playTrack();
+    },
+  },
+  async mounted() {
+    this.fullAlbum = await DeezerService.getAlbum(174109692);
     this.loadTrack(this.trackIndex);
   },
   methods: {
     loadTrack(trackIndex: number) {
-      this.currTrack.src = this.musicList[trackIndex].music;
+      this.currTrack.src = this.fullAlbum.tracks.data[trackIndex]?.preview;
       this.currTrack.load();
       this.currTrack.addEventListener("ended", this.nextTrack);
     },
@@ -41,7 +45,7 @@ export default defineComponent({
       this.isPlaying = false;
     },
     nextTrack() {
-      if (this.trackIndex < this.musicList.length - 1) {
+      if (this.trackIndex < this.fullAlbum.tracks.data.length - 1) {
         this.trackIndex++;
       } else {
         this.trackIndex = 0;
@@ -53,7 +57,7 @@ export default defineComponent({
       if (this.trackIndex > 0) {
         this.trackIndex--;
       } else {
-        this.trackIndex = this.musicList.length - 1;
+        this.trackIndex = this.fullAlbum.tracks.data.length - 1;
       }
       this.loadTrack(this.trackIndex);
       this.playTrack();
@@ -82,10 +86,29 @@ export default defineComponent({
 <template>
   <footer class="w-full h-[100px] bg-[#eb5757] mt-auto flex justify-between">
     <div class="flex items-center gap-5 w-[280px]">
-      <img src="/img/album.png" alt="album" width="100" height="100" />
+      <img
+        :src="fullAlbum ? fullAlbum.cover_medium : '/img/album.png'"
+        alt="album"
+        width="100"
+        height="100"
+      />
       <div class="text-white space-y-2">
-        <h1 class="text-sm font-bold">Canción</h1>
-        <h2 class="text-sm">Artista - Álbum</h2>
+        <h1 class="text-sm font-bold">
+          {{
+            fullAlbum?.tracks.data[trackIndex]
+              ? fullAlbum.tracks.data[trackIndex].title
+              : "Rolling in the Deep"
+          }}
+        </h1>
+        <h2 class="text-sm">
+          {{
+            fullAlbum?.tracks.data[trackIndex]
+              ? fullAlbum.tracks.data[trackIndex].artist.name
+              : "Adele"
+          }}
+          -
+          {{ fullAlbum ? fullAlbum.title : "21" }}
+        </h2>
       </div>
     </div>
     <div class="flex items-center gap-2 text-white">
@@ -96,11 +119,18 @@ export default defineComponent({
         <i class="fa-solid fa-backward-step fa-xl"></i>
       </button>
       <button
-        class="w-16 h-16 p-5 rounded-full bg-[#FF7676] hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
+        class="group w-16 h-16 p-5 rounded-full bg-[#FF7676] hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
+        :class="{ 'text-black': !fullAlbum }"
         @click="isPlaying ? pauseTrack() : playTrack()"
       >
-        <i v-if="!isPlaying" class="fa-solid fa-play fa-xl"></i>
-        <i v-if="isPlaying" class="fa-solid fa-pause fa-xl"></i>
+        <i
+          v-if="!isPlaying"
+          class="fa-solid fa-play fa-xl group-hover:scale-125 transition"
+        ></i>
+        <i
+          v-if="isPlaying"
+          class="fa-solid fa-pause fa-xl group-hover:scale-125 transition"
+        ></i>
       </button>
       <button
         class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
@@ -152,6 +182,6 @@ export default defineComponent({
 
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  @apply w-5 h-5 rounded-full bg-white;
+  @apply w-5 h-5 rounded-full bg-white cursor-pointer;
 }
 </style>
