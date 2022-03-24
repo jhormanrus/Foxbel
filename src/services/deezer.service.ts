@@ -1,4 +1,5 @@
-import type { SearchAlbum } from "@/models/search.model";
+import type { SearchAlbum } from "@/models/search-album.model";
+import type { Album } from "@/models/album.model";
 import api from "@/services/api";
 
 const DeezerService = {
@@ -6,7 +7,7 @@ const DeezerService = {
     return api(`/search-album?q=${query}`);
   },
 
-  getAlbum(id: number): Promise<SearchAlbum> {
+  getAlbum(id: number): Promise<Album> {
     return api(`/album/${id}`);
   },
 };

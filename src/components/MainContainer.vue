@@ -29,9 +29,9 @@ export default defineComponent({
 
 <template>
   <main class="grow justify-center max-h-[calc(100vh-100px)] overflow-auto">
-    <div class="flex flex-col gap-10 px-10 py-[1.875rem]">
+    <div class="flex flex-col gap-10 px-4 sm:px-10 py-[1.875rem]">
       <!-- header -->
-      <div class="flex items-center">
+      <div class="flex items-center gap-6">
         <form class="flex w-[32.75rem]" onsubmit="return false">
           <input
             v-model="search"
@@ -48,14 +48,14 @@ export default defineComponent({
             <i class="fa-solid fa-magnifying-glass fa-lg"></i>
           </button>
         </form>
-        <button class="hover:underline space-x-3 ml-auto">
+        <button class="flex hover:underline space-x-3 ml-auto">
           <span><i class="fa-solid fa-user fa-sm text-[#E86060]"></i></span>
-          <span class="ml-auto">Jhorman Rus</span>
+          <span class="ml-auto hidden lg:block">Jhorman Rus</span>
         </button>
       </div>
       <!-- portada -->
       <div class="flex self-center max-w-[970px] w-full">
-        <div class="relative w-[250px] h-[250px] text-white">
+        <div class="relative w-[250px] h-[250px] text-white hidden lg:block">
           <img
             class="absolute w-full h-full"
             src="/img/album.png"
@@ -68,11 +68,11 @@ export default defineComponent({
             <i class="fa-solid fa-play fa-5x"></i>
           </button>
         </div>
-        <div class="relative grow">
+        <div class="relative grow min-h-[250px]">
           <img
             src="/img/portada.png"
             alt="portada"
-            class="w-full h-full absolute"
+            class="w-full h-full absolute object-cover"
           />
           <div
             class="flex flex-col bg-[#a70000]/0 w-full h-full absolute px-8 py-[1.375rem] text-white"
@@ -84,7 +84,7 @@ export default defineComponent({
                 >321, 123 seguidores</span
               >
             </div>
-            <p class="text-xs mt-5">
+            <p class="text-xs mt-5 line-clamp-4">
               Adele Laurie Blue Adkins (Tottenham, Londres, Inglaterra, 5 de
               mayo de 1988), conocida simplemente como Adele, es una cantante,
               compositora y multinstrumentista británica.
@@ -94,7 +94,7 @@ export default defineComponent({
                 Reproducir
               </button>
               <button class="btn btn--default-outline">Seguir</button>
-              <button class="btn">
+              <button class="btn hidden sm:block">
                 <i class="fa-solid fa-ellipsis fa-lg"></i>
               </button>
             </div>

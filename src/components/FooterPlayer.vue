@@ -87,20 +87,21 @@ export default defineComponent({
   <footer class="w-full h-[100px] bg-[#eb5757] mt-auto flex justify-between">
     <div class="flex items-center gap-5 w-[280px]">
       <img
+        class="hidden sm:block"
         :src="fullAlbum ? fullAlbum.cover_medium : '/img/album.png'"
         alt="album"
         width="100"
         height="100"
       />
-      <div class="text-white space-y-2">
-        <h1 class="text-sm font-bold">
+      <div class="text-white space-y-2 ml-5 sm:ml-0">
+        <h1 class="text-sm line-clamp-2 font-bold">
           {{
             fullAlbum?.tracks.data[trackIndex]
               ? fullAlbum.tracks.data[trackIndex].title
               : "Rolling in the Deep"
           }}
         </h1>
-        <h2 class="text-sm">
+        <h2 class="text-sm line-clamp-2">
           {{
             fullAlbum?.tracks.data[trackIndex]
               ? fullAlbum.tracks.data[trackIndex].artist.name
@@ -113,7 +114,7 @@ export default defineComponent({
     </div>
     <div class="flex items-center gap-2 text-white">
       <button
-        class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
+        class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90 hidden sm:block"
         @click="prevTrack"
       >
         <i class="fa-solid fa-backward-step fa-xl"></i>
@@ -133,7 +134,7 @@ export default defineComponent({
         ></i>
       </button>
       <button
-        class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
+        class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90 hidden sm:block"
         @click="nextTrack"
       >
         <i class="fa-solid fa-forward-step fa-xl"></i>
@@ -162,7 +163,7 @@ export default defineComponent({
       </button>
       <input
         ref="volume"
-        class="volume-slider"
+        class="volume-slider hidden sm:block sm:w-full"
         type="range"
         name="volume"
         min="0"

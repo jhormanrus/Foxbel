@@ -2,7 +2,7 @@
 
 <template>
   <header
-    class="w-[330px] px-10 py-[3.125rem] flex flex-col gap-[1.875rem] items-center bg-[#662323] text-white"
+    class="hidden md:flex w-[330px] px-10 py-[3.125rem] flex-col gap-[1.875rem] items-center bg-[#662323] text-white"
   >
     <img src="/img/foxbel-music.png" alt="logo" width="250" height="59" />
     <div class="w-full space-y-1">
