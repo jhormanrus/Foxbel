@@ -63,6 +63,7 @@ export default defineComponent({
           />
           <button
             class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] hover:scale-110 transition"
+            @click="onPlay(192713382)"
           >
             <i class="fa-solid fa-play fa-5x"></i>
           </button>
@@ -89,7 +90,9 @@ export default defineComponent({
               compositora y multinstrumentista británica.
             </p>
             <div class="flex mt-auto gap-5">
-              <button class="btn btn--default">Reproducir</button>
+              <button class="btn btn--default" @click="onPlay(192713382)">
+                Reproducir
+              </button>
               <button class="btn btn--default-outline">Seguir</button>
               <button class="btn">
                 <i class="fa-solid fa-ellipsis fa-lg"></i>
@@ -146,7 +149,7 @@ export default defineComponent({
 }
 
 .btn--default {
-  @apply bg-[#E86060] min-w-[7.312rem];
+  @apply bg-[#E86060] min-w-[7.312rem] hover:bg-[#eb5757];
 }
 
 .btn--default-outline {
