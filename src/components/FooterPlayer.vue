@@ -121,17 +121,19 @@ export default defineComponent({
       </button>
       <button
         class="group w-16 h-16 p-5 rounded-full bg-[#FF7676] hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90"
-        :class="{ 'text-black': !fullAlbum }"
         @click="isPlaying ? pauseTrack() : playTrack()"
       >
-        <i
-          v-if="!isPlaying"
-          class="fa-solid fa-play fa-xl group-hover:scale-125 transition"
-        ></i>
-        <i
-          v-if="isPlaying"
-          class="fa-solid fa-pause fa-xl group-hover:scale-125 transition"
-        ></i>
+        <i v-if="!fullAlbum" class="fa-solid fa-spinner animate-spin"></i>
+        <slot v-else>
+          <i
+            v-if="!isPlaying"
+            class="fa-solid fa-play fa-xl group-hover:scale-125 transition"
+          ></i>
+          <i
+            v-if="isPlaying"
+            class="fa-solid fa-pause fa-xl group-hover:scale-125 transition"
+          ></i>
+        </slot>
       </button>
       <button
         class="p-5 rounded-full hover:bg-[#FF7676]/70 active:bg-[#FF7676]/90 hidden sm:block"
