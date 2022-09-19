@@ -1,5 +1,5 @@
 const configService = {
-  apiUrl: "https://foxbel-api.herokuapp.com",
+  apiUrl: "https://foxbel.my.to",
 };
 
 export default (apiEndpoint: string) => {
