@@ -21,7 +21,7 @@ jobs:
         rm: true
         source: './express'
         target: '~/github/foxbel-api'
-        strip_components: 1
+        strip_components: 2
     
     - name: Execute deploy script
       uses: appleboy/ssh-action@master
