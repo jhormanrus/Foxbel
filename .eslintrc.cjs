@@ -9,7 +9,6 @@ module.exports = {
     "@vue/eslint-config-typescript"
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
-    project: ['./tsconfig.app.json', './tsconfig.node.json', './tsconfig.vitest.json']
+    ecmaVersion: 'latest'
   }
 };

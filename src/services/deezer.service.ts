@@ -4,11 +4,11 @@ import api from "@/services/api";
 
 const DeezerService = {
   searchAlbum(query: string): Promise<SearchAlbum> {
-    return api(`/search-album?q=${query}`);
+    return api(`/api/search-album?q=${query}`);
   },
 
   getAlbum(id: number): Promise<Album> {
-    return api(`/album/${id}`);
+    return api(`/api/album/${id}`);
   },
 };
 
